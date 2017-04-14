@@ -36,7 +36,7 @@ public:
 	int size = 0; //Size of this group
 
     /*!parameter!*/ bool UseHint = false; //Turn on this parameter if you want to use hint!
-	/*!parameter!*/ bool ClearWindow = true; //Turn off this parameter if you don't want to clear your window!
+	/*!parameter!*/ bool ClearWindow = true; //Turn off this parameter if you don't fant to clear your window!
 
 	MENU(BUTTON menu[], unsigned int menusize, int inx0, int iny0, int intsizex, int intsizey, int inbuttonsizex, int inbuttonsizey) //You know what is it, don't you?
 	{

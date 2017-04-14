@@ -18,6 +18,8 @@ const int CMD_NONE = 0,
 
 
 int StartScreen(); //IDK how to name this func, but Google Translater(c) named it screensaver. Well, ok.
+void Loading();
+bool ExitProgram(HDC dc);
 
 int main()
 {
@@ -29,11 +31,11 @@ int main()
 
 	HDC background = txLoadImage("res//img//SortGraph.bmp"); //loading background resource
 
-	StartScreen();
+	Loading();
 
 	txSelectFont("Comic Sans MS", 18);
 
-	BUTTON buttons[] = { { CMD_QSRT, "Быстрая сортировка", "Click and see the quick sort efficiency graph" , TX_LIGHTBLUE, },
+	BUTTON buttons[] = { { CMD_QSRT, "Быстрая сортировка", "Click and see the quick sort efficiency graph"    , TX_LIGHTBLUE, },
 					  { CMD_SLCT, "Сортировка выбором", "Click and see the selection sort efficiency graph", TX_MAGENTA, },
 					  { CMD_BUBL, "Сортировка пузырьком", "Click and see the bubble sort efficiency graph" , TX_LIGHTGREEN, },
 					  { CMD_CLER, "Очистить графики", "Clear graphs"                                       , TX_ORANGE, },
@@ -47,11 +49,11 @@ int main()
 	txSetFillColor(TX_WHITE);
 	txClear();
 
-	txBitBlt(txDC(), 0, 0, 1000, 1000, background); 
+	txBitBlt(txDC(), 0, 0, 1000, 1000, background);
 
 	txSetColor(TX_ORANGE);
 
-	while (!GetAsyncKeyState(VK_ESCAPE)) //Main switch
+	while (true) //Main switch
 	{
 		switch (menu.RunMenu())
 		{
@@ -64,7 +66,7 @@ int main()
 		case CMD_QSRT: QuickSortGraph(TX_LIGHTBLUE, TX_LIGHTBLUE);
 			break;
 
-		case CMD_CLER: 
+		case CMD_CLER:
 		{
 			txClear();
 			txSetColor(TX_ORANGE);
@@ -82,7 +84,7 @@ int main()
 		default: break;
 		}
 	}
-	_getch();
+	return 0;
 }
 
 int StartScreen()
@@ -113,5 +115,36 @@ int StartScreen()
 		if (GetAsyncKeyState(VK_SPACE)) return 0;
 	}
 	return 0;
+}
+
+void Loading()
+{
+	for (double x = 0; x < 200; x++)
+	{
+		txSetFillColor(RGB(255 - x / 200 * 255, 255 - x / 200 * 255, 255 - x / 200 * 255));
+		txClear();
+		txDrawText(txGetExtentX() / 2 - 100, txGetExtentY() / 2 - 75, txGetExtentX() / 2 + 100, txGetExtentY() / 2 - 50, "Loading...");
+
+		txSetColor(RGB(x / 200 * 255, x / 200 * 255, x / 200 * 255));
+		txRectangle(txGetExtentX() / 2 - 100, txGetExtentY() / 2 - 25, txGetExtentX() / 2 + 100, txGetExtentY() / 2 + 25);
+
+		txSetFillColor(RGB(x / 200 * 255, x / 200 * 255, x / 200 * 255));
+		txRectangle(txGetExtentX() / 2 - 100, txGetExtentY() / 2 - 25, txGetExtentX() / 2 - 100 + x, txGetExtentY() / 2 + 25);
+
+		Sleep(10);
+	}
+
+	Sleep(500);
+}
+
+bool ExitProgram(HDC dc)
+{
+	if (!GetAsyncKeyState(VK_ESCAPE))
+	{
+		txDeleteDC(dc);
+		return false;
+	}
+	else
+		return true;
 }
 

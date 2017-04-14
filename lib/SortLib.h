@@ -199,7 +199,7 @@ void Selection (int data [], int Size)
 void SortGraph(void (*Func)(int [], int), COLORREF g1, COLORREF g2)
 	{
 
-	int data[512] = {};
+	int data[700] = {};
 
 	txSetColor(g1, 2);
 
