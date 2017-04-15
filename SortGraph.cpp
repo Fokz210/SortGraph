@@ -14,10 +14,10 @@ const int CMD_NONE = 0,
 		  CMD_CLER = 4,
 		  CMD_QSRT = 5,
 		  CMD_CNSL = 6,
-		  CMD_MUSC = 7;
+		  CMD_MUSC = 7,
+		  CMD_ISRT = 8;
 
 
-int StartScreen(); //IDK how to name this func, but Google Translater(c) named it screensaver. Well, ok.
 void Loading();
 bool ExitProgram(HDC dc);
 
@@ -27,29 +27,29 @@ int main()
 	txDisableAutoPause();
 	txBegin();
 
-	txCreateWindow(1000, 1000);
+	_txWindowStyle &= ~WS_CAPTION;
+	txCreateWindow(1600, 1200);
 
 	HDC background = txLoadImage("res//img//SortGraph.bmp"); //loading background resource
 
-	Loading();
+	txSelectFont("Comic Sans MS", 40);
 
-	txSelectFont("Comic Sans MS", 18);
+	BUTTON buttons[] = { { CMD_QSRT, "Быстрая сортировка", "Click and see the quick sort efficiency graph"  , TX_LIGHTBLUE },
+					   { CMD_SLCT, "Сортировка выбором", "Click and see the selection sort efficiency graph", TX_MAGENTA },
+					   { CMD_BUBL, "Сортировка пузырьком", "Click and see the bubble sort efficiency graph" , TX_LIGHTGREEN },
+					   { CMD_ISRT, "Сортировка вставкой", ""                                                , TX_YELLOW },
+					   { CMD_CLER, "Очистить графики", "Clear graphs"                                       , TX_ORANGE },
+					   { CMD_EXIT, "Выход из программы", "Exit app"                                         , TX_RED } }; //Initiating buttons.
 
-	BUTTON buttons[] = { { CMD_QSRT, "Быстрая сортировка", "Click and see the quick sort efficiency graph"    , TX_LIGHTBLUE, },
-					  { CMD_SLCT, "Сортировка выбором", "Click and see the selection sort efficiency graph", TX_MAGENTA, },
-					  { CMD_BUBL, "Сортировка пузырьком", "Click and see the bubble sort efficiency graph" , TX_LIGHTGREEN, },
-					  { CMD_CLER, "Очистить графики", "Clear graphs"                                       , TX_ORANGE, },
-					  { CMD_EXIT, "Выход из программы", "Exit app"                                         , TX_RED, } }; //Initiating buttons.
 
-
-	MENU menu(buttons, sizearr(buttons), 800, 250, 0, 140, 150, 100); //Creating menu obj.
+	MENU menu(buttons, sizearr(buttons), 1150, 50, 0, 900 / 6, 400, 900 / 6 - 20); //Creating menu obj.
 
 	menu.ClearWindow = false; //Turning off window clearing.
 
-	txSetFillColor(TX_WHITE);
+	txSetFillColor(TX_BLACK);
 	txClear();
 
-	txBitBlt(txDC(), 0, 0, 1000, 1000, background);
+	txBitBlt(txDC(), 0, 0, 1600, 1200, background);
 
 	txSetColor(TX_ORANGE);
 
@@ -70,9 +70,13 @@ int main()
 		{
 			txClear();
 			txSetColor(TX_ORANGE);
-			txBitBlt(txDC(), 0, 0, 1000, 1000, background);
+			txBitBlt(txDC(), 0, 0, 1600, 1200, background);
 		}
-		break;
+            break;
+
+        case CMD_ISRT: SortGraph(BinaryInsertionSort, TX_YELLOW, TX_YELLOW);
+			break;
+
 
 		case CMD_EXIT:
 		{
@@ -83,36 +87,6 @@ int main()
 
 		default: break;
 		}
-	}
-	return 0;
-}
-
-int StartScreen()
-{
-	txSetColor(TX_LIGHTBLUE);
-
-	for (int i = 0; i <= 1000; i++)
-	{
-		if (i % 30 == 0) txSetColor(RGB(rand() % 256, rand() % 256, rand() % 256));
-		txLine(0, i, i, 0);
-		txLine(1000, 1000 - i, 1000 - i, 1000);
-		Sleep(2);
-		if (GetAsyncKeyState(VK_SPACE)) return 0;
-	}
-
-	txSelectFont("Comic Sans MS", 50);
-	txSetColor(TX_LIGHTGREEN);
-	txTextOut(400, 500, "Made by Ivan(c)");
-
-	txSetColor(TX_BLACK);
-	Sleep(2000);
-
-	for (int i = 0; i <= 1000; i++)
-	{
-		txLine(0, i, i, 0);
-		txLine(1000, 1000 - i, 1000 - i, 1000);
-		Sleep(1);
-		if (GetAsyncKeyState(VK_SPACE)) return 0;
 	}
 	return 0;
 }

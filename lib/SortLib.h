@@ -15,8 +15,11 @@ void Print (int data [], int size);
 void SortGraph(void (*Func)(int [], int), COLORREF g1, COLORREF g2);
 void AB(int arr[], int size, int end1);
 int Find(int data[], int size, int el);
-int BinarySearch(int arr[], int size, int now);
-
+int BinarySearch (int arr[], int size, int now);
+int BinaryPlace (int Array[], int sorted, int x);
+void BinaryInsertionSort (int Array [], int Size);
+int Sorted (int Array [], int Size);
+void _ROR (int Array [], int first, int last);
 
 int Exchanges;
 int Scans;
@@ -199,7 +202,7 @@ void Selection (int data [], int Size)
 void SortGraph(void (*Func)(int [], int), COLORREF g1, COLORREF g2)
 	{
 
-	int data[700] = {};
+	int data[900/2] = {};
 
 	txSetColor(g1, 2);
 
@@ -216,11 +219,11 @@ void SortGraph(void (*Func)(int [], int), COLORREF g1, COLORREF g2)
 
 		int y = Exchanges;
 
-		new_x = 50 + x;
-		new_y = 950 - y;
+		new_x = 150  + x*4;
+		new_y = 1050 - y*2;
 
-		if (new_x > 50 && new_x < 750 && new_y > 250 && new_y < 950 &&
-			old_x > 50 && old_x < 750 && old_y > 250 && old_y < 950)
+		if (new_x >= 150 && new_x <= 950 && new_y >= 150 && new_y <= 1050 &&
+			old_x >= 150 && old_x <= 950 && old_y >= 150 && old_y <= 1050) 
 		{
 			txLine(old_x, old_y, new_x, new_y);
 			if (new_x % 50 == 0) txCircle(new_x, new_y, 5);
@@ -248,18 +251,18 @@ void SortGraph(void (*Func)(int [], int), COLORREF g1, COLORREF g2)
 
 		int y = Scans;
 
-		new_x = 50 + x;
-		new_y = 950 - y;
+		new_x = 150  + x*4;
+		new_y = 1050 - y*2;
 
-		if (new_x > 50 && new_x < 750 && new_y > 250 && new_y < 950 &&
-			old_x > 50 && old_x < 750 && old_y > 250 && old_y < 950) txLine(old_x, old_y, new_x, new_y);
+		if (new_x >= 150 && new_x <= 950 && new_y >= 150 && new_y <= 1050 &&
+			old_x >= 150 && old_x <= 950 && old_y >= 150 && old_y <= 1050) txLine(old_x, old_y, new_x, new_y);
 
 
 		old_x = new_x;
 		old_y = new_y;
         }
 
-	while (txMouseButtons() != 1);
+	//while (txMouseButtons() != 1);
 
 	}
 
@@ -348,7 +351,7 @@ void QuickSort (int data[], int size, int left, int right)
 void QuickSortGraph(COLORREF g1, COLORREF g2)
 	{
 
-	int data[700] = {};
+	int data[900] = {};
 
 	txSetColor(g1, 2);
 
@@ -368,16 +371,16 @@ void QuickSortGraph(COLORREF g1, COLORREF g2)
 
 		int y = Exchanges;
 
-		new_x = 50 + x;
-		new_y = 950 - y;
+		new_x = 150 + x*2;
+		new_y = 1050 - y;
 
-		if (new_x > 50 && new_x < 750 && new_y > 250 && new_y < 950 &&
-			old_x > 50 && old_x < 750 && old_y > 250 && old_y < 950) 
+		if (new_x >= 150 && new_x <= 950 && new_y >= 150 && new_y <= 1050 &&
+			old_x >= 150 && old_x <= 950 && old_y >= 150 && old_y <= 1050) 
 		{
 			txLine(old_x, old_y, new_x, new_y);
 			if (new_x % 50 == 0) txCircle(new_x, new_y, 5);
 		}
-		
+
 
 		old_x = new_x;
 		old_y = new_y;
@@ -402,13 +405,13 @@ void QuickSortGraph(COLORREF g1, COLORREF g2)
 
         int y = Scans;
 
-        new_x = 50 + x;
-        new_y = 950 - y;
+		new_x = 150 + x * 2;
+		new_y = 1050 - y;
 
-		if (new_x > 50 && new_x < 750 && new_y > 250 && new_y < 950 &&
-			old_x > 50 && old_x < 750 && old_y > 250 && old_y < 950) txLine(old_x, old_y, new_x, new_y);
+		if (new_x >= 150 && new_x <= 950 && new_y >= 150 && new_y <= 1050 &&
+			old_x >= 150 && old_x <= 950 && old_y >= 150 && old_y <= 1050) txLine(old_x, old_y, new_x, new_y);
 
-		
+
         old_x = new_x;
         old_y = new_y;
         }
@@ -419,20 +422,6 @@ void QuickSortGraph(COLORREF g1, COLORREF g2)
 
 //-----------------------------------------------------------------------------
 
-void InsertionSort (int data[], int size)
-    {
-
-    Exchanges = 0;
-
-    Scans = 0;
-
-    int i = 0;
-    while (i <= size)
-        {
-        ROR (data, size, BinarySearch(data, size, i), i);
-        i++;
-        }
-    }
 
 //-----------------------------------------------------------------------------
 
@@ -459,27 +448,79 @@ int Find (int data[], int size, int el)
 
 //-----------------------------------------------------------------------------
 
-int BinarySearch(int arr[], int size, int now)
-{
-	int left = 0; int right = now;
+void BinaryInsertionSort (int Array [], int Size)
+    {
+    Exchanges = 0;
+    Scans     = 0;
 
-	if (arr[now] < arr[0])
-		return 0;
+    int sorted = Sorted (Array, Size);
+    int number = sorted + 1;
 
-	while (right - left > 1)
-	{
-		if (arr[(right + left) / 2] == arr[now])
-			return (right + left) / 2;
-		if (arr[(right + left) / 2] > arr[now])
-			right = (right + left) / 2;
-		else
-			left = (right + left) / 2;
-	}
-
-
-
-	return bigger(right, left);
-
-}
-
+    while (number < Size)
+        {
+        int start = sorted + 1;
+        _ROR (Array, BinaryPlace (Array, Sorted (Array, Size), number), start);
+        sorted ++;
+        number++;
+        }
+    }
 //----------------------------------------------------------------------------
+
+int BinaryPlace (int Array[], int sorted, int x)
+    {
+    int left, mid, right;
+    left = 0;
+    right = sorted - 1;
+    while (left <= right)
+        {
+        mid = (left + right)/2;
+
+        if (Array[x] < Array[mid])
+            {
+            Scans++;
+            right = mid - 1;
+            }
+        else if (Array[x] > Array[mid])
+            {
+            Scans++;
+            left = mid + 1;
+            }
+        else if (Array[x] == Array[mid])
+            {
+            Scans++;
+            return mid;
+            }
+
+        }
+
+    return left;
+    }
+
+//=============================================================================
+
+int Sorted (int Array [], int Size)
+    {
+    int i = 0;
+    for (int i = 0; i < Size; i++)
+        {
+        if (Array [i] > Array [i + 1])
+            {
+            return i;
+            }
+        }
+    }
+
+void _ROR (int Array [], int first, int last)
+    {
+    int i = last;
+    int temp = Array [last];
+
+    while (i > first)
+        {
+        Array [i] = Array [i - 1];
+        i--;
+        Exchanges++;
+        }
+    Array [first] = temp;
+    Exchanges++;
+    }

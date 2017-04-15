@@ -21,14 +21,14 @@ struct BUTTON //Button structure
 	int x1, y1;
 	int x2, y2;
 	int status;
-}; 
+};
 
 class MENU //Menu class
 {
 public:
 	const int BS_NONE = 0, //Button status
 			  BS_PRESSED = 1,
-		      BS_MOUSEOVER = 2; 
+		      BS_MOUSEOVER = 2;
 
 	const int CMD_NONE = 0; //Null button command
 
@@ -36,20 +36,20 @@ public:
 	int size = 0; //Size of this group
 
     /*!parameter!*/ bool UseHint = false; //Turn on this parameter if you want to use hint!
-	/*!parameter!*/ bool ClearWindow = true; //Turn off this parameter if you don't fant to clear your window!
+	/*!parameter!*/ bool ClearWindow = true; //Turn off this parameter if you don't want to clear your window!
 
 	MENU(BUTTON menu[], unsigned int menusize, int inx0, int iny0, int intsizex, int intsizey, int inbuttonsizex, int inbuttonsizey) //You know what is it, don't you?
 	{
 		size = menusize;
 		ButtonsInitAll(inx0, iny0, intsizex, intsizey, inbuttonsizex, inbuttonsizey);
 
-		for (int i = 0; i < menusize; i++) //I think it is not the best(!) way 
+		for (int i = 0; i < menusize; i++) //I think it is not the best(!) way
 		{
 			buttons[i].command = menu[i].command;
 			buttons[i].text = menu[i].text;
 			buttons[i].helpText = menu[i].helpText;
 			buttons[i].color = menu[i].color;
-			buttons[i].dc = menu[i].dc;  
+			buttons[i].dc = menu[i].dc;
 		}
 	}
 
@@ -77,7 +77,7 @@ public:
 	void ButtonDraw(const BUTTON* button) //Drawing one(!) button
 	{
 		txSetColor(TX_BLACK);
-		txSetFillColor((button->status == BS_MOUSEOVER) ? TX_YELLOW : ((button->color) ? button->color : TX_ORANGE));
+		txSetFillColor((button->status == BS_MOUSEOVER) ? TX_WHITE : ((button->color) ? button->color : TX_ORANGE));
 
 		int hint = (button->status == BS_MOUSEOVER) ? 0 : 0;
 
@@ -120,7 +120,7 @@ public:
 			ButtonDraw(&buttons[i]);
 	}
 
-	int ButtonsTestAll() //Testing all buttons 
+	int ButtonsTestAll() //Testing all buttons
 	{
 		for (int i = 0; i < size; i++)
 			if (ButtonTest(&buttons[i]) == BS_PRESSED) return buttons[i].command;
