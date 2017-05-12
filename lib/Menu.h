@@ -1,4 +1,5 @@
 #pragma once
+#include "TXLib.h"
 
 //=========================================================================
 //! This header is useful if you want to create a group of buttons (menu)
@@ -43,7 +44,7 @@ public:
 		size = menusize;
 		ButtonsInitAll(inx0, iny0, intsizex, intsizey, inbuttonsizex, inbuttonsizey);
 
-		for (int i = 0; i < menusize; i++) //I think it is not the best(!) way
+		for (unsigned int i = 0; i < menusize; i++) //I think it is not the best(!) way
 		{
 			buttons[i].command = menu[i].command;
 			buttons[i].text = menu[i].text;

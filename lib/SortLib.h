@@ -8,18 +8,20 @@ void ROR (  int data [], int Size, int first, int last);
 void Gen (  int data [], int Size, bool ifrand, int RSize);
 void Bubble (  int data [], int Size);
 void Exchange(int data [], int Size, int a, int b);
-void REV (  int data [], int Size);
+void REV (int data [], int size, int left, int right);
 int  MinPos (int data [], int Size, int start);
 void Selection (int data [], int Size);
 void Print (int data [], int size);
 void SortGraph(void (*Func)(int [], int), COLORREF g1, COLORREF g2);
 void AB(int arr[], int size, int end1);
-int Find(int data[], int size, int el);
 int BinarySearch (int arr[], int size, int now);
 int BinaryPlace (int Array[], int sorted, int x);
 void BinaryInsertionSort (int Array [], int Size);
 int Sorted (int Array [], int Size);
 void _ROR (int Array [], int first, int last);
+void QuickSort (int data[], int size, int left, int right);
+void QuickSortGraph(COLORREF g1, COLORREF g2);
+void BubbleSort (int data [], int Size);
 
 int Exchanges;
 int Scans;
@@ -178,7 +180,9 @@ int MinPos (int data [], int Size, int start)
     return Min;
     }
 
-//-----------------------------------------------------------------------------
+//=======================================================================
+// Сортировка выбором
+//=======================================================================
 
 void Selection (int data [], int Size)
     {
@@ -197,7 +201,9 @@ void Selection (int data [], int Size)
         }
     }
 
-//-----------------------------------------------------------------------------
+//=======================================================================
+// Функия рисования графиков сортировки
+//=======================================================================
 
 void SortGraph(void (*Func)(int [], int), COLORREF g1, COLORREF g2)
 	{
@@ -223,7 +229,7 @@ void SortGraph(void (*Func)(int [], int), COLORREF g1, COLORREF g2)
 		new_y = 1050 - y*2;
 
 		if (new_x >= 150 && new_x <= 950 && new_y >= 150 && new_y <= 1050 &&
-			old_x >= 150 && old_x <= 950 && old_y >= 150 && old_y <= 1050) 
+			old_x >= 150 && old_x <= 950 && old_y >= 150 && old_y <= 1050)
 		{
 			txLine(old_x, old_y, new_x, new_y);
 			if (new_x % 50 == 0) txCircle(new_x, new_y, 5);
@@ -266,7 +272,9 @@ void SortGraph(void (*Func)(int [], int), COLORREF g1, COLORREF g2)
 
 	}
 
-//-----------------------------------------------------------------------------
+//=======================================================================
+// Функия замены двух частей массива
+//=======================================================================
 
 void AB(int arr[], int size, int end1)
     {
@@ -278,11 +286,12 @@ void AB(int arr[], int size, int end1)
 
     }
 
-//-----------------------------------------------------------------------------
+//=======================================================================
+// Сортировка пузырьком
+//=======================================================================
 
 void BubbleSort (int data [], int Size)
 	{
-	int swaps = 0;
 	int comparisons = 0;
 	Exchanges = 0;
 	Scans = 0;
@@ -309,7 +318,9 @@ void BubbleSort (int data [], int Size)
 
 	}
 
-//-----------------------------------------------------------------------------
+//=======================================================================
+// Быстрая сортировка
+//=======================================================================
 
 void QuickSort (int data[], int size, int left, int right)
     {
@@ -346,7 +357,9 @@ void QuickSort (int data[], int size, int left, int right)
     Scans+=2;
     }
 
-//-----------------------------------------------------------------------------
+//=======================================================================
+// График быстрой сортировки
+//=======================================================================
 
 void QuickSortGraph(COLORREF g1, COLORREF g2)
 	{
@@ -375,7 +388,7 @@ void QuickSortGraph(COLORREF g1, COLORREF g2)
 		new_y = 1050 - y;
 
 		if (new_x >= 150 && new_x <= 950 && new_y >= 150 && new_y <= 1050 &&
-			old_x >= 150 && old_x <= 950 && old_y >= 150 && old_y <= 1050) 
+			old_x >= 150 && old_x <= 950 && old_y >= 150 && old_y <= 1050)
 		{
 			txLine(old_x, old_y, new_x, new_y);
 			if (new_x % 50 == 0) txCircle(new_x, new_y, 5);
@@ -419,34 +432,9 @@ void QuickSortGraph(COLORREF g1, COLORREF g2)
 	//while (txMouseButtons() != 1);
 
 	}
-
-//-----------------------------------------------------------------------------
-
-
-//-----------------------------------------------------------------------------
-
-int Find (int data[], int size, int el)
-    {
-    int i = el - 1;
-    while (i >= 0)
-        {
-        if (data[i] == data[el])
-            {
-            return i;
-            }
-        if (data[i] < data[el])
-            {
-            return i + 1;
-            }
-
-        Scans+=2;
-
-        i--;
-        }
-    return 0;
-    }
-
-//-----------------------------------------------------------------------------
+//=======================================================================
+// Сортировка двоичной вставкой
+//=======================================================================
 
 void BinaryInsertionSort (int Array [], int Size)
     {
@@ -496,11 +484,10 @@ int BinaryPlace (int Array[], int sorted, int x)
     return left;
     }
 
-//=============================================================================
+//-----------------------------------------------------------------------------
 
 int Sorted (int Array [], int Size)
     {
-    int i = 0;
     for (int i = 0; i < Size; i++)
         {
         if (Array [i] > Array [i + 1])
@@ -508,7 +495,10 @@ int Sorted (int Array [], int Size)
             return i;
             }
         }
+    return -1;
     }
+
+//-----------------------------------------------------------------------------
 
 void _ROR (int Array [], int first, int last)
     {
