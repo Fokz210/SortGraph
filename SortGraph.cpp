@@ -2,7 +2,7 @@
 #include "lib\Menu.h" //Menu.h version 1.0 now. Check it to see help.
 
 //=============================================================================
-//! SortGraph version 3.0
+//! SortGraph version 4.1
 //!
 //! (c) Ivan Cheremisenov (9.4.2017)
 //=============================================================================
@@ -32,19 +32,20 @@ int main()
 
 	HDC background = txLoadImage("res//img//SortGraph.bmp"); //loading background resource
 
-	txSelectFont("Comic Sans MS", 40);
+	txSelectFont("Calibri", 30);
 
 	BUTTON buttons[] = { { CMD_QSRT, "Быстрая сортировка", "Click and see the quick sort efficiency graph"  , TX_LIGHTBLUE },
 					   { CMD_SLCT, "Сортировка выбором", "Click and see the selection sort efficiency graph", TX_MAGENTA },
 					   { CMD_BUBL, "Сортировка пузырьком", "Click and see the bubble sort efficiency graph" , TX_LIGHTGREEN },
 					   { CMD_ISRT, "Сортировка вставкой", ""                                                , TX_YELLOW },
-					   { CMD_CLER, "Очистить графики", "Clear graphs"                                       , TX_ORANGE },
+					   { CMD_CLER, "Очитстить графики", "Clear graphs"                                      , TX_ORANGE },
 					   { CMD_EXIT, "Выход из программы", "Exit app"                                         , TX_RED } }; //Initiating buttons.
 
 
-	MENU menu(buttons, sizearr(buttons), 1150, 50, 0, 900 / 6, 400, 900 / 6 - 20); //Creating menu obj.
+	MENU menu(buttons, sizearr(buttons), 1250, 150, 0, 850 / 6, 250, 900 / 6 - 50); //Creating menu obj.
 
 	menu.ClearWindow = false; //Turning off window clearing.
+    menu.NewDesign = true;
 
 	txSetFillColor(TX_BLACK);
 	txClear();
